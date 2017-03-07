@@ -1,0 +1,33 @@
+[
+  {
+    "resource": "aws_db_instance",
+    "rules": [
+      {
+        "name": "encryption should be enabled",
+        "expr": "R['storage_encrypted']=='true'"
+      },
+      {
+        "name": "multi-az should be enabled",
+        "expr": "R['multi_az']=='true'"
+      }
+    ]
+  },
+  {
+    "resource": "aws_security_group_rule",
+    "rules":[
+      {
+        "name": "no ingress security group role should be open to the public",
+        "expr": "R['type'] != 'ingress' or all([val != '0.0.0.0/0' for val in R['^cidr_blocks.[0-9]+$']])"
+      }
+    ]
+  },
+  {
+    "resource": "aws_db_security_group",
+    "rules":[
+      {
+        "name": "no ingress security group role should be open to the public",
+        "expr": "all([val != '0.0.0.0/0' for val in R['^ingress.[0-9]+.cidr$']])"
+      }
+    ]
+  }
+]

@@ -1,0 +1,2 @@
+include terraform_validator/dependencies/tfjson-mac
+include terraform_validator/dependencies/tfjson
