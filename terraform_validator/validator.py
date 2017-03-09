@@ -1,5 +1,6 @@
 import re
 import sys
+import logging
 
 
 class ResourceContainer:
@@ -75,5 +76,5 @@ class TerraformValidator:
         except Exception as e:
             '''exceptions are suppressed here to let the validation continue. So that the user will
             receive al complete report and be able to fix all errors at once.'''
-            sys.stderr.write('[EXCEPTION] %s\n' % (e,))
+            logging.exception('[EXCEPTION] Exception occurred during rule expression evaluation')
             return False
