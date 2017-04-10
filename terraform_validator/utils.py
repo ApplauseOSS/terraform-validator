@@ -3,6 +3,9 @@ import os
 import subprocess
 import sys
 
+class TFJsonException(Exception):
+    pass
+
 
 def read_rules_file(rules_file_path):
     """
@@ -26,7 +29,18 @@ def read_plan_file(plan_file_path):
         tfjson_bin = 'tfjson-mac'
     else:
         raise Exception('Operating system not supported.')
-    proc = subprocess.Popen(
-        os.path.dirname(os.path.realpath(__file__)) + '/dependencies/%s %s'
-        % (tfjson_bin, plan_file_path, ), shell=True, stdout=subprocess.PIPE)
-    return json.load(proc.stdout)
+    proc = subprocess.Popen(os.path.dirname(os.path.realpath(__file__))
+                                + '/dependencies/%s %s' % (tfjson_bin, plan_file_path, ),
+                            shell=True,
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE)
+
+    (out, err) = proc.communicate()
+    retval = proc.poll()
+
+    if retval == 0:
+        # life is good
+        return json.loads(out)
+    else:
+        # something's amiss
+        raise TFJsonException('Error parsing play file:\n{}'.format(err))

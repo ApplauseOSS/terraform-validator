@@ -18,3 +18,10 @@ class TestUtils(TestCase):
         self.assertIn("aws_db_instance.my_app_event_store", plan_obj)
         self.assertIn("aws_db_instance.my_app_event_store_2", plan_obj)
         self.assertIn("allocated_storage", plan_obj["aws_db_instance.my_app_event_store_2"])
+
+    def test_read_bad_plan_file(self):
+        try:
+            utils.read_plan_file('terraform_validator/tests/resources/test_rules.json')
+            self.assertFalse('Parsing bad plan did not fail (it should have).')
+        except utils.TFJsonException, e:
+            self.assertTrue('Parsing bad plan failed (this is a good thing).')
