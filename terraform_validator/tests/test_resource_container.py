@@ -30,5 +30,4 @@ class TestResourceContainer(TestCase):
         self.assertEqual(len(self.rc['^.*$']), 9)
 
     def test_key_not_exist(self):
-        with self.assertRaises(KeyError):
-            self.rc['not_exist_key']
+        self.assertFalse(self.rc['not_exist_key'])

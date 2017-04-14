@@ -23,5 +23,5 @@ class TestUtils(TestCase):
         try:
             utils.read_plan_file('terraform_validator/tests/resources/test_rules.json')
             self.assertFalse('Parsing bad plan did not fail (it should have).')
-        except utils.TFJsonException, e:
+        except utils.TFJsonException:
             self.assertTrue('Parsing bad plan failed (this is a good thing).')

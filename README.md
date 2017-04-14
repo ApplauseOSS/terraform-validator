@@ -67,6 +67,12 @@ For example, by using command ```terraform show my.tfplan```, you can check what
 Then, you can imagine that ```R['engine']``` is ```'mysql'```, ```R['^ingress.[0-9]+.cidr$']]``` is ```['0.0.0.0/0', '127.0.0.1/0']```
 and write validation logic accordingly.
 
+You can set a strict requirement for an expression to return at least one value by using the `any()` function:
+```
+any(R['expression'])
+```
+and you can chain your expressions with boolean operators like `or`, `and`, `not`, etc. Any valid Python expression is accepted.
+
 ### Full example of a rules json:
 ```javascript
 [
@@ -88,7 +94,7 @@ and write validation logic accordingly.
     "rules":[
       {
         "name": "no ingress security group role should be open to the public",
-        "expr": "R['type'] != 'ingress' or all([val != '0.0.0.0/0' for val in R['^cidr_blocks.[0-9]+$']])"
+        "expr": "R['type'] != 'ingress' or (not any(R['^cidr_blocks.[0-9]+$']) or all([val != '0.0.0.0/0' for val in R['^cidr_blocks.[0-9]+$']]))"
       }
     ]
   },
@@ -97,7 +103,7 @@ and write validation logic accordingly.
     "rules":[
       {
         "name": "no ingress security group role should be open to the public",
-        "expr": "all([val != '0.0.0.0/0' for val in R['^ingress.[0-9]+.cidr$']])"
+        "expr": "not any(R['^ingress.[0-9]+.cidr$']) or all([val != '0.0.0.0/0' for val in R['^ingress.[0-9]+.cidr$']])"
       }
     ]
   }

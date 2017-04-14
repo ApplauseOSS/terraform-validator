@@ -1,5 +1,4 @@
 import re
-import sys
 import logging
 
 
@@ -26,7 +25,7 @@ class ResourceContainer:
             if len(matched_vals) > 0:
                 return matched_vals
             else:
-                raise KeyError(regex_key)  # if cannot match any key, throw KeyError
+                return None
 
 
 class TerraformValidator:
