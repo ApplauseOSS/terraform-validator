@@ -1,4 +1,6 @@
 # Terraform validator
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FApplauseOSS%2Fterraform-validator.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FApplauseOSS%2Fterraform-validator?ref=badge_shield)
+
 Command line utility that validate a terraform plan file against certain rules based on input rules.
 
 ## Use cases
@@ -121,3 +123,6 @@ parameter.2943476575.value: "no"
 ```
 
 Special thanks to [tfjson](https://github.com/palantir/tfjson) for providing .tfplan file parsing ability.
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FApplauseOSS%2Fterraform-validator.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FApplauseOSS%2Fterraform-validator?ref=badge_large)
